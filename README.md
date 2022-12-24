@@ -2,10 +2,12 @@
 
 ## Project explanation
 The objective of this project is to analyze and study, through the use of supervised and unsupervised machine learning methods, the potability of water from data in the 'drinking water potability' dataset. The project is divided into 3 parts:
-- **Exploratory Data Analysis (EDA)**. This is the phase in which an exploratory analysis of the entire dataset is carried out. Initially, the individual variables in the dataset will be analyzed, showing their main statistical metrics (mean, standard deviation, quartiles, minimum and maximum values, etc.), the presence or absence of missing values, and, if they are present, the consequent action to be taken (computation, replacement with mean/median, etc.). Then a multivariate analysis will be carried out, with the aim of looking for possible relationships (collinearity and/or multicollinearity) between the variables.
-The jupyter notebook related to this step can be found at the following: [link]()
-- **Model-building phase**. In this one will try to build a machine learning model that can classify/predict the output of the target variable 'Potability'. To do this, supervised and non-supervised learning techniques will be applied. 
-The jupyter notebook related to model construction using supervised learning techniques can be found at the following link: [supervised](). 
+- **Exploratory Data Analysis (EDA)**. This is the phase in which an exploratory analysis of the entire dataset is carried out. Initially, the individual variables in the dataset will be analyzed, showing their main statistical metrics (mean, standard deviation, quartiles, minimum and maximum values, etc.), the presence or absence of missing values, and, if they are present, the consequent action to be taken (computation, replacement with mean/median, etc.). Then a multivariate analysis will be carried out, with the aim of looking for possible relationships (collinearity and/or multicollinearity) between the variables. \
+The jupyter notebook related to this step can be found at the following: [link](https://github.com/opon13/Drinking-water-potability-analysis-in-Python/blob/main/Exaploratory%20Data%20Analysis%20(EDA).ipynb). \
+At the end of the analysis, the results will be exposed and two scripts in python will be written from them, the purpose of which is to model (Data Scaling and Preprocessing) the dataset according to the results obtained (e.g., possible removal of variables and/or observations with a high rate of missing values, removal of variables with a high correlation index with others). \
+The scripts inherent to Data Scaling and Preprocessing can be found at the following: [link]().
+- **Model-building phase**. In this one will try to build a machine learning model that can classify/predict the output of the target variable 'Potability'. To do this, supervised and non-supervised learning techniques will be applied. \
+The jupyter notebook related to model construction using supervised learning techniques can be found at the following link: [supervised](). \
 The jupyter notebook related to building the model using the unsupervised learning techniques can be found at the following link: [unsupervised]().
 - **Evaluation phase**. In this phase, the metrics obtained from the various models will be compared and the model that obtained the highest results will be chosen.
 
