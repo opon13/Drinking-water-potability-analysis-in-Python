@@ -1,4 +1,4 @@
-# 'Drinking water potability' analysis in Python
+# Water potability prediction in Python
 
 ## Project explanation
 The objective of this project is to analyze and study, through the use of supervised and unsupervised machine learning methods, the potability of water from data in the 'drinking water potability' dataset. The project is divided into 3 parts:
