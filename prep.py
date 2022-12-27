@@ -42,7 +42,7 @@ def prep(df,
         for i in num:
             df.loc[i] = df.loc[i].fillna(means)
     
-    clean_df = df.dropna(axis=0, how='any')
+    clean_df = df.dropna(axis=0, how='any').reset_index(drop=True)
     
     if scale == True:
         scaled_df = scaler.fit_transform(clean_df)
