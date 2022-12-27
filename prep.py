@@ -8,7 +8,7 @@ def prep(df,
          perc: int  = 100,
          fill_method: str = 'mean',
          scale: bool = True,
-         scaler: str = preprocessing.MinMaxScaler()):
+         scaler = preprocessing.MinMaxScaler()):
     
     if axis not in ['col', 'obs']:
         print('choose the axis: "col" or "obs"')
@@ -42,7 +42,7 @@ def prep(df,
         for i in num:
             df.loc[i] = df.loc[i].fillna(means)
     
-    clean_df = df.dropna(axis=0)
+    clean_df = df.dropna(axis=0, how='any')
     
     if scale == True:
         scaled_df = scaler.fit_transform(clean_df)
