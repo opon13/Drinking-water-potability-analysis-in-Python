@@ -93,8 +93,8 @@ def split(df,
     
     variables_index = [x for x in range(df.shape[1])]
     variables_index.remove(target_index)
-    X = df.iloc[:, variables_index]
-    y = df.iloc[:, target_index]
+    X = df[:, variables_index]
+    y = df[:, target_index]
 
     print('BEFORE SPLITTING: \n')
     print('X shape: ', np.shape(X))
