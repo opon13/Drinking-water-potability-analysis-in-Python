@@ -76,7 +76,12 @@ def prep(data,
     clean_df = df.dropna(axis=0, how='any').reset_index(drop=True)
     
     if scale == True:
-        scaled_df = scaler.fit_transform(clean_df)
+        # I fixed the problem:
+        # It computed the scaler also of the categorical variable target
+        target_df=clean_df[target].copy()
+        features=clean_df.drop(target, axis=1)
+        scaled_df = scaler.fit_transform(features)
+        scaled_df[target]=target_df
         return scaled_df
     else:
         return clean_df
