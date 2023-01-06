@@ -78,10 +78,14 @@ def prep(data,
     if scale == True:
         # I fixed the problem:
         # It computed the scaler also of the categorical variable target
-        target_df=clean_df[target].copy()
+        target_df=clean_df[target]
         features=clean_df.drop(target, axis=1)
+        features_name=features.columns
         scaled_df = scaler.fit_transform(features)
+        scaled_df=pd.DataFrame(scaled_df, columns = features_name)
         scaled_df[target]=target_df
+        scaled_df=np.array(scaled_df)
+        scaled_df
         return scaled_df
     else:
         return clean_df
