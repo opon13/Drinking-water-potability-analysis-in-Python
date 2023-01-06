@@ -87,7 +87,8 @@ def split(df,
           target_index: int,
           validation: bool = True,
           perc_train: float or int = 0.6, 
-          random_seed: int = None):
+          random_seed: int = None,
+          verbose=True):
     
     assert target_index in range(df.shape[1])
     
@@ -95,23 +96,24 @@ def split(df,
     variables_index.remove(target_index)
     X = df[:, variables_index]
     y = df[:, target_index]
-
-    print('BEFORE SPLITTING: \n')
-    print('X shape: ', np.shape(X))
-    print('y shape: ', np.shape(y))
+    if(verbose==True):
+        print('BEFORE SPLITTING: \n')
+        print('X shape: ', np.shape(X))
+        print('y shape: ', np.shape(y))
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = (1-perc_train), random_state = random_seed)
-
-    print('\nAFTER SPLITTING: ')
-    print('X_train shape: ', np.shape(X_train))
-    print('y_train shape: ', np.shape(y_train))
-    print('X_test shape: ', np.shape(X_test))
-    print('y_test shape: ', np.shape(y_test))
+    if(verbose==True):
+        print('\nAFTER SPLITTING: ')
+        print('X_train shape: ', np.shape(X_train))
+        print('y_train shape: ', np.shape(y_train))
+        print('X_test shape: ', np.shape(X_test))
+        print('y_test shape: ', np.shape(y_test))
     
     if validation == True:
         X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, test_size=0.5, random_state = random_seed)
-        print('X_val shape: ', np.shape(X_val))
-        print('y_val shape: ', np.shape(y_val))
+        if(verbose==True):
+            print('X_val shape: ', np.shape(X_val))
+            print('y_val shape: ', np.shape(y_val))
         return X_train, X_val, X_test, y_train, y_val, y_test
     else:
         return X_train, X_test, y_train, y_test
