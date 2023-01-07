@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
+from  sklearn.metrics import accuracy_score
 import random
 
 
@@ -126,3 +127,12 @@ def split(df,
         return X_train, X_val, X_test, y_train, y_val, y_test
     else:
         return X_train, X_test, y_train, y_test
+
+
+def evaluate(model, test_features, test_labels):
+    predictions = model.predict(test_features)
+    accuracy =accuracy_score(test_labels, predictions)
+    print('Model Performance')
+    print('Accuracy = {:0.2f}%.'.format(accuracy*100))
+    
+    return accuracy
