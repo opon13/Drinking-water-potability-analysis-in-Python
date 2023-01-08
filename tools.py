@@ -149,7 +149,7 @@ def evaluate(model,
         cm_display.plot()
         plt.show()
     
-    print('Model Performance \n')
+    print('Model Performance: \n')
     print('accuracy = {:0.2f}%.'.format(accuracy*100))
     print('recall = {:0.2f}%.'.format(recall*100))
     print('precision = {:0.2f}%.'.format(precision*100))
