@@ -142,17 +142,17 @@ def evaluate(model,
     precision = precision_score(test_labels, predictions)
     f1 = f1_score(test_labels, predictions)
 
-    print('Model Performance \n')
-    print('accuracy = {:0.2f}%.'.format(accuracy*100))
-    print('recall = {:0.2f}%.'.format(recall*100))
-    print('precision = {:0.2f}%.'.format(precision*100))
-    print('f1_score = {:0.2f}%.'.format(f1*100))
-
     if conf_matrix==True:
         print('Confusion matrix: ')
         cm = confusion_matrix(test_labels, predictions)
         cm_display = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = [False, True])
         cm_display.plot()
         plt.show()
+    
+    print('Model Performance \n')
+    print('accuracy = {:0.2f}%.'.format(accuracy*100))
+    print('recall = {:0.2f}%.'.format(recall*100))
+    print('precision = {:0.2f}%.'.format(precision*100))
+    print('f1_score = {:0.2f}%.'.format(f1*100))
 
     return accuracy, recall, precision, f1
