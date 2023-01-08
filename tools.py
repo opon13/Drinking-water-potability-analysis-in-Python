@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
-from  sklearn.metrics import accuracy_score
+from  sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score, ConfusionMatrixDisplay, confusion_matrix
 import random
 
 
@@ -13,7 +14,8 @@ def prep(data,
          perc: int  = 100,
          fill_method: str = 'mean',
          scale: bool = True,
-         scaler = preprocessing.MinMaxScaler()):
+         scaler = preprocessing.MinMaxScaler(),
+         random_state: int = None):
     
     if axis not in ['col', 'obs']:
         print('choose the axis: "col" or "obs"')
@@ -22,7 +24,10 @@ def prep(data,
     elif axis=='col':
         new_df = df.dropna(axis=1, how='any')
         return new_df
-        
+
+    if random_state != None:
+        random.seed(random_state)
+
     assert fill_method in ['mean', 'median']
     assert perc in range(101)
     
@@ -77,16 +82,13 @@ def prep(data,
     clean_df = df.dropna(axis=0, how='any').reset_index(drop=True)
     
     if scale == True:
-        # I fixed the problem:
-        # It computed the scaler also of the categorical variable target
-        target_df=clean_df[target]
-        features=clean_df.drop(target, axis=1)
-        features_name=features.columns
+        target_df = clean_df[target]
+        features = clean_df.drop(target, axis=1)
+        features_name = features.columns
         scaled_df = scaler.fit_transform(features)
-        scaled_df=pd.DataFrame(scaled_df, columns = features_name)
-        scaled_df[target]=target_df
-        scaled_df=np.array(scaled_df)
-        scaled_df
+        scaled_df = pd.DataFrame(scaled_df, columns = features_name)
+        scaled_df[target] = target_df
+        scaled_df = np.array(scaled_df)
         return scaled_df
     else:
         return clean_df
@@ -129,10 +131,28 @@ def split(df,
         return X_train, X_test, y_train, y_test
 
 
-def evaluate(model, test_features, test_labels):
+def evaluate(model, 
+    test_features, 
+    test_labels,
+    conf_matrix: bool = False):
+
     predictions = model.predict(test_features)
-    accuracy =accuracy_score(test_labels, predictions)
-    print('Model Performance')
-    print('Accuracy = {:0.2f}%.'.format(accuracy*100))
-    
-    return accuracy
+    accuracy = accuracy_score(test_labels, predictions)
+    recall = recall_score(test_labels, predictions)
+    precision = precision_score(test_labels, predictions)
+    f1 = f1_score(test_labels, predictions)
+
+    print('Model Performance \n')
+    print('accuracy = {:0.2f}%.'.format(accuracy*100))
+    print('recall = {:0.2f}%.'.format(recall*100))
+    print('precision = {:0.2f}%.'.format(precision*100))
+    print('f1_score = {:0.2f}%.'.format(f1*100))
+
+    if conf_matrix==True:
+        print('Confusion matrix: ')
+        cm = confusion_matrix(test_labels, predictions)
+        cm_display = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = [False, True])
+        cm_display.plot()
+        plt.show()
+
+    return accuracy, recall, precision, f1
