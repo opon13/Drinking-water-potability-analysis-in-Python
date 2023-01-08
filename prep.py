@@ -12,7 +12,8 @@ def prep(data,
          perc: int  = 100,
          fill_method: str = 'mean',
          scale: bool = True,
-         scaler = preprocessing.MinMaxScaler()):
+         scaler = preprocessing.MinMaxScaler(),
+         random_state: int = None):
     
     if axis not in ['col', 'obs']:
         print('choose the axis: "col" or "obs"')
@@ -21,7 +22,10 @@ def prep(data,
     elif axis=='col':
         new_df = df.dropna(axis=1, how='any')
         return new_df
-        
+
+    if random_state != None:
+        random.seed(random_state)
+
     assert fill_method in ['mean', 'median']
     assert perc in range(101)
     
