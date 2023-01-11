@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_validate
 from  sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score, ConfusionMatrixDisplay, confusion_matrix
 import random
 
@@ -131,23 +132,32 @@ def split(df,
         return X_train, X_test, y_train, y_test
 
 
-def evaluate(model, 
-    test_features, 
-    test_labels,
+def evaluate(model,
+    features, 
+    labels,
+    cv: bool = False,
+    k_fold: int = 5, 
     conf_matrix: bool = False):
 
-    predictions = model.predict(test_features)
-    accuracy = accuracy_score(test_labels, predictions)
-    recall = recall_score(test_labels, predictions)
-    precision = precision_score(test_labels, predictions)
-    f1 = f1_score(test_labels, predictions)
+    if cv==True:
+        metrics = cross_validate(model, features, labels, cv = k_fold, scoring=['accuracy', 'recall', 'precision', 'f1'])
+        accuracy = np.mean(metrics['test_accuracy'])
+        recall = np.mean(metrics['test_recall'])
+        precision = np.mean(metrics['test_precision'])
+        f1 = np.mean(metrics['test_f1'])
+    else:
+        predictions = model.predict(features)
+        accuracy = accuracy_score(labels, predictions)
+        recall = recall_score(labels, predictions)
+        precision = precision_score(labels, predictions)
+        f1 = f1_score(labels, predictions)
 
-    if conf_matrix==True:
-        print('Confusion matrix: ')
-        cm = confusion_matrix(test_labels, predictions)
-        cm_display = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = [False, True])
-        cm_display.plot()
-        plt.show()
+        if conf_matrix==True:
+            print('Confusion matrix: ')
+            cm = confusion_matrix(labels, predictions)
+            cm_display = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = [False, True])
+            cm_display.plot()
+            plt.show()
     
     print('Model Performance: \n')
     print('accuracy = {:0.2f}%.'.format(accuracy*100))
