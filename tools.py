@@ -167,8 +167,8 @@ def evaluate(model,
 
     return accuracy, recall, precision, f1
 
-def improvements(metrics_a,metrics_b,model_a,model_b):
-    print('\nImprovements '+model_a+' Model respect '+model_b+':')
+def improvements(metrics_a, metrics_b, model_a, model_b):
+    print('\nImprovements '+model_a+' model respect '+model_b+':')
     print('Accuracy: {:0.2f} %'.format( 100 * (metrics_a[0] - metrics_b[0]) / metrics_b[0]))
     print('Recall: {:0.2f} %'.format( 100 * (metrics_a[1] - metrics_b[1]) / metrics_b[1]))
     print('Precision: {:0.2f} %'.format( 100 * (metrics_a[2] - metrics_b[2]) / metrics_b[2]))
