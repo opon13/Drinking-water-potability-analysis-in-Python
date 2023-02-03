@@ -148,9 +148,9 @@ def evaluate(model,
     else:
         predictions = model.predict(features)
         accuracy = accuracy_score(labels, predictions)
-        recall = recall_score(labels, predictions)
-        precision = precision_score(labels, predictions)
-        f1 = f1_score(labels, predictions)
+        recall = recall_score(labels, predictions, zero_division=0)
+        precision = precision_score(labels, predictions, zero_division=0)
+        f1 = f1_score(labels, predictions, zero_division=0)
 
         if conf_matrix==True:
             print('Confusion matrix: ')
@@ -167,10 +167,15 @@ def evaluate(model,
 
     return accuracy, recall, precision, f1
 
-def improvements(metrics_a, metrics_b, model_a, model_b):
-    print('\nImprovements '+model_a+' model respect '+model_b+':')
-    print('Accuracy: {:0.2f} %'.format( 100 * (metrics_a[0] - metrics_b[0]) / metrics_b[0]))
-    print('Recall: {:0.2f} %'.format( 100 * (metrics_a[1] - metrics_b[1]) / metrics_b[1]))
-    print('Precision: {:0.2f} %'.format( 100 * (metrics_a[2] - metrics_b[2]) / metrics_b[2]))
-    print('F1-Score: {:0.2f} %'.format( 100 * (metrics_a[3] - metrics_b[3]) / metrics_b[3]))
+def improvements(previous_metrics, new_metrics, previous_model, new_model):
+    assert type(previous_model)==str and type(new_model)==str
+    print('\nImprovements of the '+ new_model +' model over the '+ previous_model +' model:\n')
+    metrics = []
+    for i in range(4):
+        j = 100 * (new_metrics[i] - previous_metrics[i])
+        metrics.append(j)
+    print('improvement in accuracy: {:0.2f} %'.format(metrics[0]))
+    print('improvement in recall: {:0.2f} %'.format(metrics[1]))
+    print('improvement in precision: {:0.2f} %'.format(metrics[2]))
+    print('improvement in  f1-score: {:0.2f} %'.format(metrics[3]))
     
